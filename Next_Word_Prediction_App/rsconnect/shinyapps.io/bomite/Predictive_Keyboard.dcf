@@ -1,0 +1,12 @@
+name: Predictive_Keyboard
+title: Predictive_Keyboard
+username:
+account: bomite
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2908499
+bundleId: 3682537
+url: https://bomite.shinyapps.io/Predictive_Keyboard/
+when: 1601373907.86967
+asMultiple: FALSE
+asStatic: FALSE
