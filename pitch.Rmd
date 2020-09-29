@@ -1,0 +1,36 @@
+---
+title: "Pitch"
+author: "Swan Htet Ye Yint"
+date: "9/29/2020"
+output: ioslides_presentation
+---
+
+##
+Intoduction
+
+This is the final capstone project of Data Science Specialization Course offered by John Hopkins University.  
+This project is inspired by Swiftkey smart keyboard which is available on both ios and android.
+The objective of this project is to build a next word prediction model with R.
+
+##
+Algorithm Used
+
+I used the data provided in the coursera which contains the files:news,blogs and twitter posts.
+In this predictive model, it takes the user input text and try to predict by dividing into "n-grams".
+For better accuracy, i used **Jelinek-Mercer smoothing** in this algorithm by combining the unigrams,bigrams and trigrams probabilities.  
+
+##
+ShinyApp  
+
+-In this web app, you will see the text box where you can type.
+-After you type, there will be 3 predictions boxes under the text box.
+-You can either click one of the three buttons or if your desired word is not there, you can continue typing another word.  
+-If you click the button, it will automatically add the word to the text box you were typing and predict another 3 words.
+
+##
+Advantages and source codes
+
+-The prediction is almost instantly after you type and does not require too much ram.
+-You can add the predicted word directly by clicking the buttons.
+
+Source codes- "https://github.com/NgaMite/Swiftkey-Capstone-Project"
