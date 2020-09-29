@@ -1,0 +1,88 @@
+---
+title: "Exploratory Analysis"
+author: "Swan Htet Ye Yint"
+date: "9/28/2020"
+output: html_document
+---
+
+##Overview  
+
+We will explore the data before be do anything else after downloading the data. We will see if the data has anything interesting before cleaning.  
+
+
+##Load the libraries and data
+```{r}
+library(tm)
+
+blogs <- readLines("./final/en_US/en_US.blogs.txt")
+news <- readLines("./final/en_US/en_US.news.txt")
+twitter <- readLines("./final/en_US/en_US.twitter.txt")
+```  
+
+##Word counts and summary of the datas  
+```{r}
+max(nchar(blogs))
+max(nchar(news))
+max(nchar(twitter))
+
+summary(blogs)
+summary(news)
+summary(twitter)
+```
+
+It is a pretty big data.So we need to subset some of those as training sets.
+
+##Subset the data
+```{r}
+blog.sample <- sample(blogs,10000)
+news.sample <- sample(news,10000)
+twitter.sample <- sample(twitter,10000)
+
+##Create corpus
+sampledata <- c(blog.sample,news.sample,twitter.sample)
+writeLines(sampledata,"output/sampledata.txt")
+sample_data <- readLines("./output/sampledata.txt")
+```
+We take 10000 lines from each of the files and combine them into one file
+##Cleaning the Data
+
+We need to remove the punctuations, numbers, stop words and white spaces. We also have to change the captial letters to lower cases.
+```{r}
+sample_data <- removePunctuation(sample_data)
+sample_data <- tolower(sample_data)
+sample_data <- removeNumbers(sample_data)
+sample_data <- stemDocument(sample_data)
+sample_data <- removeWords(sample_data, c('the', stopwords("english")))
+sample_data <- stripWhitespace(sample_data)
+```  
+
+##Tokenization
+Next, we will separte each words from each other so that it'll make easier to make the model. 
+```{r}
+sample_data <- paste0(unlist(sample_data), collapse=" ")
+sample_data <- strsplit(sample_data, " ", fixed=TRUE)[[1L]]
+sample_data <- sample_data[sample_data != ""]
+##unigram
+
+one_grams <- as.data.frame(sample_data)
+one_grams <- sort(table(one_grams), decreasing = T)
+
+##bigram
+
+bigrams <- vapply(ngrams(sample_data, 2L), paste, "", collapse=" ")
+two_grams <- as.data.frame(bigrams)
+two_grams <- sort(table(two_grams), decreasing = T)
+
+```
+~
+##Histogram
+Top 5 unigrams
+```{r}
+unigram_top5 <- one_grams[1:5]
+barplot(unigram_top5)
+```
+Top 5 bigrams
+```{r}
+bigram_top5 <- two_grams[1:5]
+barplot(bigram_top5)
+```
